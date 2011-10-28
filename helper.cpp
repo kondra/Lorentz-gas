@@ -8,8 +8,9 @@
 static const int side = 25;
 static const qreal atomR = 5;
 static const qreal electronR = 2;
+static const int n = 50;
 
-static const qreal speed = 150;
+static const qreal speed = 100;
 
 Helper::Helper()
 {
@@ -17,13 +18,16 @@ Helper::Helper()
     atomBrush = QBrush(Qt::black);
     electronBrush = QBrush(Qt::red);
 
-//    int x = rand() % width;
-//    int y = rand() % height;
-//    positions.append(QPointF(x, y));
-//    speedDir.append((2 * M_PI) / rand());
-    positions.append(QPointF(10, 200));
-    speedDir.append(2 * M_PI - M_PI / 12);
-    num = 1;
+    num = n;
+    int angle, x, y;
+    for (int i = 0; i < num; i++) {
+        //FIXME
+        x = rand() % 400;
+        y = rand() % 400;
+        positions.append(QPointF(x, y));
+        angle = rand() % 360;
+        speedDir.append((M_PI / 360) * angle);
+    }
 }
 
 void Helper::setDim(int w, int h)
@@ -34,30 +38,27 @@ void Helper::setDim(int w, int h)
 
 void Helper::checkBorders(QPointF& p, qreal& phi)
 {
+    int h = height - electronR;
+    int w = width - electronR;
     qreal y = p.y();
     qreal x = p.x();
-    qreal dy = y - height;
-    qreal dx = x - width;
+    qreal dy = y - h;
+    qreal dx = x - w;
     if (dy > 0) {
-        p.ry() = height - dy;
+        p.ry() = h - dy;
         phi = 2 * M_PI - phi;
     }
     if (dx > 0) {
-        p.rx() = width - dx;
-        if (phi < M_PI)
-            phi = M_PI / 2 + phi;
-        else
-            phi = 3 * M_PI - phi;
+        p.rx() = w - dx;
+        phi = 3 * M_PI - phi;
     }
-    if (y < 0) {
-        p.ry() = -y;
+    if (y < electronR) {
+        p.ry() = 2 * electronR - y;
+        phi = 2 * M_PI - phi;
     }
-    if (x < 0) {
-        p.rx() = -x;
-        if (phi < M_PI)
-            phi = M_PI - phi;
-        else
-            phi = 2 * M_PI - phi;
+    if (x < electronR) {
+        p.rx() = 2 * electronR - x;
+        phi = 3 * M_PI - phi;
     }
 }
 
@@ -69,7 +70,6 @@ void Helper::paint(QPainter *painter, QPaintEvent *event, int elapsed)
 
     painter->save();
 
-    /*
     painter->setBrush(atomBrush);
     int iBegin = (rect.height() % side) / 2;
     int jBegin = (rect.width() % side) / 2;
@@ -82,15 +82,16 @@ void Helper::paint(QPainter *painter, QPaintEvent *event, int elapsed)
             painter->drawEllipse(p, atomR, atomR);
         }
     }
-    */
 
     painter->setBrush(electronBrush); 
     qreal s;
+    QPointF p1, p2;
     for (int i = 0; i < num; i++) {
         s = speed * elapsed / 1000;
         p.rx() = cos(speedDir[i]) * s;
         p.ry() = sin(speedDir[i]) * s;
-        positions[i] += p;
+        p1 = positions[i];
+        p2 = positions[i] += p;
         checkBorders(positions[i], speedDir[i]);
         painter->drawEllipse(positions[i], electronR, electronR);
     }

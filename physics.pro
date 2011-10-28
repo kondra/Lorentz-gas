@@ -1,13 +1,9 @@
-QT          += opengl
-
 CONFIG      += console
 
-HEADERS     = glwidget.h \
-              helper.h \
+HEADERS     = helper.h \
               widget.h \
               window.h
-SOURCES     = glwidget.cpp \
-              helper.cpp \
+SOURCES     = helper.cpp \
               main.cpp \
               widget.cpp \
               window.cpp

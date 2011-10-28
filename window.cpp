@@ -1,19 +1,18 @@
 #include <QtGui>
-#include "glwidget.h"
 #include "widget.h"
 #include "window.h"
 
 #define NATIVE
 
-static const int refresh_rate = 100;
+static const int refresh_rate = 50;
 
 Window::Window()
     : QWidget()
 {
 #ifdef NATIVE
     Widget *native = new Widget(&helper, this);
-    QLabel *nativeLabel = new QLabel(tr("Native"));
-    nativeLabel->setAlignment(Qt::AlignHCenter);
+//    QLabel *nativeLabel = new QLabel(tr("Native"));
+//    nativeLabel->setAlignment(Qt::AlignHCenter);
 #else
     GLWidget *openGL = new GLWidget(&helper, this);
     QLabel *openGLLabel = new QLabel(tr("OpenGL"));
@@ -23,7 +22,7 @@ Window::Window()
     QGridLayout *layout = new QGridLayout;
 #ifdef NATIVE
     layout->addWidget(native, 0, 0);
-    layout->addWidget(nativeLabel, 1, 0);
+//    layout->addWidget(nativeLabel, 1, 0);
 #else
     layout->addWidget(openGL, 0, 1);
     layout->addWidget(openGLLabel, 1, 1);

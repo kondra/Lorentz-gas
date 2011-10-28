@@ -21,7 +21,6 @@ void Widget::animate()
 
 void Widget::paintEvent(QPaintEvent *event)
 {
-    QPainter painter;
     painter.begin(this);
     painter.setRenderHint(QPainter::Antialiasing);
     helper->paint(&painter, event, elapsed);

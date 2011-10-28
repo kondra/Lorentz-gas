@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPaintEvent>
+#include <QPainter>
 
 class Helper;
 
@@ -20,6 +21,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
+    QPainter painter;
     Helper *helper;
     int elapsed;
 };
