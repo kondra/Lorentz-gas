@@ -1,5 +1,5 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <QBrush>
 #include <QFont>
@@ -7,10 +7,10 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-class Helper
+class Model
 {
 public:
-    Helper();
+    Model();
 
 public:
     void paint(QPainter *painter, QPaintEvent *event, int elapsed);

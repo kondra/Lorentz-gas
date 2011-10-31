@@ -1,18 +1,20 @@
 #include <QtGui>
-#include "helper.h"
+#include "model.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
+//hardcoded
 static const int side = 25;
 static const qreal atomR = 5;
 static const qreal electronR = 2;
-static const int n = 50;
 
+//user defined
+static const int n = 50;
 static const qreal speed = 100;
 
-Helper::Helper()
+Model::Model()
 {
     background = QBrush(Qt::white);
     atomBrush = QBrush(Qt::black);
@@ -30,13 +32,13 @@ Helper::Helper()
     }
 }
 
-void Helper::setDim(int w, int h)
+void Model::setDim(int w, int h)
 {
     width = w;
     height = h;
 }
 
-void Helper::checkBorders(QPointF& p, qreal& phi)
+void Model::checkBorders(QPointF& p, qreal& phi)
 {
     int h = height - electronR;
     int w = width - electronR;
@@ -62,7 +64,7 @@ void Helper::checkBorders(QPointF& p, qreal& phi)
     }
 }
 
-void Helper::paint(QPainter *painter, QPaintEvent *event, int elapsed)
+void Model::paint(QPainter *painter, QPaintEvent *event, int elapsed)
 {
     QPointF p;
     QRect rect = event->rect();

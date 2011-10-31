@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "helper.h"
+#include "model.h"
 
 class Window : public QWidget
 {
@@ -17,7 +17,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    Helper helper;
+    Model model;
 };
 
 #endif

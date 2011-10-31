@@ -1,16 +1,16 @@
 #include <QtGui>
 #include "widget.h"
-#include "helper.h"
+#include "model.h"
 
 static const int w = 400;
 static const int h = 400;
 
-Widget::Widget(Helper *helper, QWidget *parent)
-    : QWidget(parent), helper(helper)
+Widget::Widget(Model *model, QWidget *parent)
+    : QWidget(parent), Model(model)
 {
     elapsed = 0;
     setFixedSize(w, h);
-    helper->setDim(w, h);
+    model->setDim(w, h);
 }
 
 void Widget::animate()
@@ -23,6 +23,6 @@ void Widget::paintEvent(QPaintEvent *event)
 {
     painter.begin(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    helper->paint(&painter, event, elapsed);
+    model->paint(&painter, event, elapsed);
     painter.end();
 }

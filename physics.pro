@@ -1,9 +1,9 @@
 CONFIG      += console
 
-HEADERS     = helper.h \
+HEADERS     = model.h \
               widget.h \
               window.h
-SOURCES     = helper.cpp \
+SOURCES     = model.cpp \
               main.cpp \
               widget.cpp \
               window.cpp

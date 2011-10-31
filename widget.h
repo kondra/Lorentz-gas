@@ -5,14 +5,14 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-class Helper;
+class Model;
 
 class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(Helper *helper, QWidget *parent);
+    Widget(Model *model, QWidget *parent);
 
 public slots:
     void animate();
@@ -22,7 +22,7 @@ protected:
 
 private:
     QPainter painter;
-    Helper *helper;
+    Model *model;
     int elapsed;
 };
 
