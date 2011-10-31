@@ -6,7 +6,7 @@ static const int w = 400;
 static const int h = 400;
 
 Widget::Widget(Model *model, QWidget *parent)
-    : QWidget(parent), Model(model)
+    : QWidget(parent), model(model)
 {
     elapsed = 0;
     setFixedSize(w, h);
