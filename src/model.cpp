@@ -11,7 +11,7 @@ static const qreal atomR = 5;
 static const qreal electronR = 2;
 
 //user defined
-static const int n = 50;
+static const int n = 1;
 static const qreal speed = 100;
 
 Model::Model()
@@ -19,6 +19,11 @@ Model::Model()
     background = QBrush(Qt::white);
     atomBrush = QBrush(Qt::black);
     electronBrush = QBrush(Qt::red);
+
+    xBegin = (400 % side) / 2; //FIXME width
+    yBegin = (400 % side) / 2; //FIXME height
+    xBegin = xBegin ? xBegin : side;
+    yBegin = yBegin ? yBegin : side;
 
     num = n;
     int angle, x, y;
@@ -64,6 +69,17 @@ void Model::checkBorders(QPointF& p, qreal& phi)
     }
 }
 
+void Model::checkAtom(QPointF& p, qreal& phi)
+{
+    qreal x = p.x();
+    qreal y = p.y();
+    qreal xC = floor(x / side) * side + xBegin;
+    qreal yC = floor(y / side) * side + yBegin;
+
+    qreal normalAngle = atan2(y - yC, x - xC);
+    phi = 2 * normalAngle - phi + M_PI;
+}
+
 void Model::paint(QPainter *painter, QPaintEvent *event, int elapsed)
 {
     QPointF p;
@@ -73,12 +89,8 @@ void Model::paint(QPainter *painter, QPaintEvent *event, int elapsed)
     painter->save();
 
     painter->setBrush(atomBrush);
-    int iBegin = (rect.height() % side) / 2;
-    int jBegin = (rect.width() % side) / 2;
-    iBegin = iBegin ? iBegin : side;
-    jBegin = jBegin ? jBegin : side;
-    for (int i = iBegin; i < rect.height(); i += side) {
-        for (int j = jBegin; j < rect.width(); j += side) {
+    for (int i = yBegin; i < rect.height(); i += side) {
+        for (int j = xBegin; j < rect.width(); j += side) {
             p.ry() = i;
             p.rx() = j;
             painter->drawEllipse(p, atomR, atomR);
@@ -90,6 +102,9 @@ void Model::paint(QPainter *painter, QPaintEvent *event, int elapsed)
     QPointF p1, p2;
     for (int i = 0; i < num; i++) {
         s = speed * elapsed / 1000;
+
+        checkAtom(positions[i], speedDir[i]);
+
         p.rx() = cos(speedDir[i]) * s;
         p.ry() = sin(speedDir[i]) * s;
         p1 = positions[i];

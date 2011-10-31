@@ -18,9 +18,13 @@ public:
 
 private:
     void checkBorders(QPointF& p, qreal& phi);
+    void checkAtom(QPointF& p, qreal& phi);
 
     int width;
     int height;
+
+    int xBegin;
+    int yBegin;
 
     QBrush background;
     QBrush atomBrush;
