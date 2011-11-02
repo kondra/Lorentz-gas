@@ -98,12 +98,11 @@ void Model::paint(QPainter *painter, QPaintEvent *event, int elapsed)
     }
 
     painter->setBrush(electronBrush); 
-    qreal s;
+    qreal s = speed * elapsed / 1000;
     QPointF p1, p2;
-    for (int i = 0; i < num; i++) {
-        s = speed * elapsed / 1000;
 
-        checkAtom(positions[i], speedDir[i]);
+    for (int i = 0; i < num; i++) {
+//        checkAtom(positions[i], speedDir[i]);
 
         p.rx() = cos(speedDir[i]) * s;
         p.ry() = sin(speedDir[i]) * s;
